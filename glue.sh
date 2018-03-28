@@ -13,10 +13,10 @@ done < icon_manifest.csv
 unset IFS
 
 
-SHORTCUTS=(/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/**/*.lnk)
+SHORTCUTS=(/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/**/*.lnk)
 
 for f in "${SHORTCUTS[@]}"; do
-	SHORTCUT="${f##/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/}"
+	SHORTCUT="${f##/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/}"
 
 	# iterate keys and attempt pattern matching against shortcut
 	for key in ${(k)ICONS[@]}; do
