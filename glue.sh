@@ -4,7 +4,7 @@ ICONS_PATH='/mnt/d/ext/customization/icons/metro'
 
 SHORTCUT_LOATIONS=(
 	/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu
-	${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu/Programs'
+	${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu'
 )
 
 
@@ -13,7 +13,7 @@ declare -a SHORTCUTS
 
 for location in "$SHORTCUT_LOATIONS[@]"; do
 	location=$(realpath "$location")
-	SHORTCUTS+=("$location"/**/*.lnk)
+	SHORTCUTS+=("$location"/**/*.lnk) 2>/dev/null
 done
 
 
@@ -31,7 +31,7 @@ unset IFS
 # set the new icons for each shortcut if it's in the icon manifest
 for f in "${SHORTCUTS[@]}"; do
 	# get the name without the prefix
-	SHORTCUT="${f##*Start Menu/}"
+	SHORTCUT="${f##*Start Menu/Programs/}"
 
 	# iterate keys and attempt pattern matching against shortcut
 	for key in ${(k)ICONS[@]}; do
