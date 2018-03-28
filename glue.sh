@@ -2,7 +2,22 @@
 
 ICONS_PATH='/mnt/d/ext/customization/icons/metro'
 
+SHORTCUT_LOATIONS=(
+	/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu
+	${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu/Programs'
+)
 
+
+# build a list of shortcuts from all locations
+declare -a SHORTCUTS
+
+for location in "$SHORTCUT_LOATIONS[@]"; do
+	location=$(realpath "$location")
+	SHORTCUTS+=("$location"/**/*.lnk)
+done
+
+
+# read icon manifest and build an associative array
 declare -A ICONS
 IFS=','
 
@@ -13,10 +28,10 @@ done < icon_manifest.csv
 unset IFS
 
 
-SHORTCUTS=(/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/**/*.lnk)
-
+# set the new icons for each shortcut if it's in the icon manifest
 for f in "${SHORTCUTS[@]}"; do
-	SHORTCUT="${f##/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/}"
+	# get the name without the prefix
+	SHORTCUT="${f##*Start Menu/}"
 
 	# iterate keys and attempt pattern matching against shortcut
 	for key in ${(k)ICONS[@]}; do
