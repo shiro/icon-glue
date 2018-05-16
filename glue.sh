@@ -8,6 +8,43 @@ SHORTCUT_LOATIONS=(
 )
 
 
+declare -A EXTENSIONS
+declare -A EXTENSIONS_ICONS
+
+# read extension manifest
+IFS=', '
+while read -r ext app icon; do
+	EXTENSIONS[$ext]="$app"
+	EXTENSIONS_ICONS[$ext]="$icon"
+done < ext_manifest.csv
+unset IFS
+
+
+# create output dir
+mkdir -p out
+
+# generate registry script head
+echo 'Windows Registry Editor Version 5.00' > out/ext.reg
+
+# generate registry snippets and append to output
+for key in ${(k)EXTENSIONS[@]}; do
+
+	icon="${ICONS_PATH}/${EXTENSIONS_ICONS[$key]}"
+	icon="$(cygpath -w "$icon")"
+
+	app="${EXTENSIONS[$key]}"
+
+    sed -e "s|EXTENSION|${key}|g" \
+		-e "s|ICON|${icon//\\/\\/}|g" \
+		-e "s|APPLICATION|${app//\\/\\\\\\\\}|g" \
+		template/ext.reg >> out/ext.reg
+done
+
+# apply registry snippet silently
+regedit.exe /s out/ext.reg
+
+
+
 # build a list of shortcuts from all locations
 declare -a SHORTCUTS
 
@@ -39,8 +76,8 @@ for f in "${SHORTCUTS[@]}"; do
 
 			ICON=${ICONS[$key]}
 
-			SHORTCUT_PATH=$(wslpath -w "$f")
-			ICON_PATH=$(wslpath -w "${ICONS_PATH}/${ICON}")
+			SHORTCUT_PATH=$(cygpath -w "$f")
+			ICON_PATH=$(cygpath -w "${ICONS_PATH}/${ICON}")
 
 			echo "[SET]    $f"
 

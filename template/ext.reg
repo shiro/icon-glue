@@ -1,0 +1,14 @@
+; EXTENSION handler
+[HKEY_CLASSES_ROOT\.EXTENSION]
+@="auto.EXTENSION"
+
+[HKEY_CLASSES_ROOT\auto.EXTENSION\DefaultIcon]
+@="ICON"
+
+[HKEY_CLASSES_ROOT\auto.EXTENSION\shell\open]
+@="Open"
+
+[HKEY_CLASSES_ROOT\auto.EXTENSION\shell\open\command]
+@="APPLICATION %1"
+
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.EXTENSION]
