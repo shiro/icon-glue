@@ -11,12 +11,16 @@ SHORTCUT_LOATIONS=(
 declare -A EXTENSIONS
 declare -A EXTENSIONS_ICONS
 
-# read extension manifest
-IFS=', '
-while read -r ext app icon; do
+# read extension manifest without whitespaces
+IFS=','
+sed 's/\s*,\s*/,/g' ext_manifest.csv | while read -r ext app icon; do
+	# printf -- "%s\n" "$app"
+	printf -- "%s\n" "$app"
+	printf -- "%s\n" "$ext"
+	printf -- "%s\n" "$icon"
 	EXTENSIONS[$ext]="$app"
 	EXTENSIONS_ICONS[$ext]="$icon"
-done < ext_manifest.csv
+done
 unset IFS
 
 
@@ -58,9 +62,9 @@ done
 declare -A ICONS
 IFS=','
 
-while read key value; do
+sed 's/\s*,\s*/,/g' icon_manifest.csv | while read key value; do
 	ICONS[$key]=$(echo "$value" | xargs)
-done < icon_manifest.csv
+done
 
 unset IFS
 
