@@ -14,10 +14,6 @@ declare -A EXTENSIONS_ICONS
 # read extension manifest without whitespaces
 IFS=','
 sed 's/\s*,\s*/,/g' ext_manifest.csv | while read -r ext app icon; do
-	# printf -- "%s\n" "$app"
-	printf -- "%s\n" "$app"
-	printf -- "%s\n" "$ext"
-	printf -- "%s\n" "$icon"
 	EXTENSIONS[$ext]="$app"
 	EXTENSIONS_ICONS[$ext]="$icon"
 done
@@ -42,6 +38,9 @@ for key in ${(k)EXTENSIONS[@]}; do
 		-e "s|ICON|${icon//\\/\\/}|g" \
 		-e "s|APPLICATION|${app//\\/\\\\\\\\}|g" \
 		template/ext.reg >> out/ext.reg
+
+	# set the new extension as the default program
+	./SetUserFTA ".${key}" "auto.${key}"
 done
 
 # apply registry snippet silently
