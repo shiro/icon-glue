@@ -78,6 +78,8 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
     -e "s|APPLICATION|${openWith//\\/\\\\\\\\}|g" \
     template/ext.reg >> out/ext.reg
 
+  echo >> out/ext.reg
+
   # set the new extension as the default program
   ./SetUserFTA ".${extension}" "auto.${extension}"
 
