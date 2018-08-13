@@ -1,92 +1,97 @@
-#!/usr/bin/zsh
+#!/bin/zsh
 
-ICONS_PATH='/mnt/d/ext/customization/icons/metro'
+ICON_DIR='/mnt/d/ext/customization/icons/metro'
 
 SHORTCUT_LOATIONS=(
-	/mnt/c/ProgramData/Microsoft/Windows/Start\ Menu
-	${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu'
+    /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu
+    ${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu'
 )
 
-
-declare -A EXTENSIONS
-declare -A EXTENSIONS_ICONS
-
-# read extension manifest without whitespaces
-IFS=','
-sed 's/\s*,\s*/,/g' ext_manifest.csv | while read -r ext app icon; do
-	EXTENSIONS[$ext]="$app"
-	EXTENSIONS_ICONS[$ext]="$icon"
-done
-unset IFS
+CONFIG_FILE='config.json'
 
 
 # create output dir
 mkdir -p out
 
+
+echo "### FILE TYPES ###"
+echo
+
 # generate registry script head
 echo 'Windows Registry Editor Version 5.00' > out/ext.reg
 
-# generate registry snippets and append to output
-for key in ${(k)EXTENSIONS[@]}; do
 
-	icon="${ICONS_PATH}/${EXTENSIONS_ICONS[$key]}"
-	icon="$(cygpath -w "$icon")"
+for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
+    _value() { echo ${row} | base64 --decode | jq -r ${1} }
 
-	app="${EXTENSIONS[$key]}"
+    extension=`_value '.extension'`
+    openWith=`_value '.openWith'`
+    icon=`_value '.icon'`
 
-    sed -e "s|EXTENSION|${key}|g" \
-		-e "s|ICON|${icon//\\/\\/}|g" \
-		-e "s|APPLICATION|${app//\\/\\\\\\\\}|g" \
-		template/ext.reg >> out/ext.reg
+    iconPath="`cygpath -w "$ICON_DIR/$icon"`"
 
-	# set the new extension as the default program
-	./SetUserFTA ".${key}" "auto.${key}"
+    sed -e "s|EXTENSION|${extension}|g" \
+        -e "s|ICON|${iconPath//\\/\\/}|g" \
+        -e "s|APPLICATION|${openWith//\\/\\\\\\\\}|g" \
+        template/ext.reg >> out/ext.reg
+
+    # set the new extension as the default program
+    ./SetUserFTA ".${extension}" "auto.${extension}"
+
+    echo "[SET]    $icon"
 done
+
 
 # apply registry snippet silently
 regedit.exe /s out/ext.reg
 
+
+echo
+echo "### SHORTCUTS ###"
+echo
 
 
 # build a list of shortcuts from all locations
 declare -a SHORTCUTS
 
 for location in "$SHORTCUT_LOATIONS[@]"; do
-	location=$(realpath "$location")
-	SHORTCUTS+=("$location"/**/*.lnk) 2>/dev/null
+    location=$(realpath "$location")
+    SHORTCUTS+=("$location"/**/*.lnk) 2>/dev/null
 done
 
 
-# read icon manifest and build an associative array
 declare -A ICONS
-IFS=','
 
-sed 's/\s*,\s*/,/g' icon_manifest.csv | while read key value; do
-	ICONS[$key]=$(echo "$value" | xargs)
+for row in `jq -r '.shortcuts[] | @base64' "$CONFIG_FILE"`; do
+    _value() { echo ${row} | base64 --decode | jq -r ${1} }
+
+    pattern=`_value '.pattern'`
+    icon=`_value '.icon'`
+
+    ICONS[$pattern]="$value"
 done
-
-unset IFS
 
 
 # set the new icons for each shortcut if it's in the icon manifest
-for f in "${SHORTCUTS[@]}"; do
-	# get the name without the prefix
-	SHORTCUT="${f##*Start Menu/Programs/}"
+for shortcutPath in "${SHORTCUTS[@]}"; do
+    # get the name without the prefix
+    shortcut="${shortcutPath##*Start Menu/Programs/}"
 
-	# iterate keys and attempt pattern matching against shortcut
-	for key in ${(k)ICONS[@]}; do
-		if [[ "$SHORTCUT" =~ "$key" ]]; then
+    # iterate keys and attempt pattern matching against shortcut
+    for key in ${(k)ICONS[@]}; do
+        if [[ "$shortcut" =~ "$key" ]]; then
 
-			ICON=${ICONS[$key]}
+            ICON=${ICONS[$key]}
 
-			SHORTCUT_PATH=$(cygpath -w "$f")
-			ICON_PATH=$(cygpath -w "${ICONS_PATH}/${ICON}")
+            SHORTCUT_PATH=$(cygpath -w "$shortcutPath")
+            ICON_PATH=$(cygpath -w "${ICONS_PATH}/${ICON}")
 
-			echo "[SET]    $f"
+            echo "[SET]    $shortcutPath"
 
-			cmd.exe /c set_icon.vbs "$SHORTCUT_PATH" "$ICON_PATH"
-		fi
-	done
+            # update the registry value
+            cmd.exe /c set_icon.vbs "$SHORTCUT_PATH" "$ICON_PATH"
+        fi
+    done
 
-	unset ICON
+    unset ICON
 done
