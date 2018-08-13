@@ -34,6 +34,7 @@
 		{ "pattern": "Docker for Windows", "icon": "Docker.ico "}
 	],
 	"filetypes": [
+		{ "extension": "", "openWith": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe", "icon": "Vivaldi.ico" },
 		{ "extension": "html", "openWith": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe", "icon": "Vivaldi.ico" },
 		{ "extension": "pdf", "openWith": "C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe", "icon": "Adobe Acrobat Reader.ico" },
 		{ "extension": "md", "openWith": "C:\\Windows\\System32\\notepad.exe", "icon": "markdown.ico" },
