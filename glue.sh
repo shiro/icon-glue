@@ -1,13 +1,56 @@
 #!/bin/zsh
 
-ICON_DIR='/mnt/d/ext/customization/icons/metro'
+SCRIPT_NAME="`basename $0`"
+
+usage(){
+  cat <<USAGE
+  Usage: $SCRIPT_NAME [OPTION]...
+    -c=<config.json>       specify config file
+    -i=<path to icon dir>  specify custom icon dir path
+        --help             print this message
+USAGE
+}
+
 
 SHORTCUT_LOATIONS=(
     /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu
     ${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu'
 )
 
+
 CONFIG_FILE='config.json'
+ICON_DIR='/mnt/d/ext/customization/icons/metro'
+
+
+while getopts ':c:i:-:' opt; do
+  case "$opt" in
+    -) case "$OPTARG" in
+        help)
+          usage; exit 0
+          ;;
+        *)
+          usage; exit 1
+          ;;
+      esac;;
+    c)
+      if [ ! -e "$OPTARG" ]; then
+        echo "$OPTARG: not found"
+        exit 1
+      fi
+      CONFIG_FILE="$OPTARG"
+      ;;
+    i)
+      if [ ! -d "$OPTARG" ]; then
+        echo "$OPTARG: not found"
+        exit 1
+      fi
+      ICON_DIR="$OPTARG"
+      ;;
+    :|\?)
+      usage; exit 1
+      ;;
+  esac
+done
 
 
 # create output dir
@@ -22,23 +65,23 @@ echo 'Windows Registry Editor Version 5.00' > out/ext.reg
 
 
 for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
-    _value() { echo ${row} | base64 --decode | jq -r ${1} }
+  _value() { echo ${row} | base64 --decode | jq -r ${1} }
 
-    extension=`_value '.extension'`
-    openWith=`_value '.openWith'`
-    icon=`_value '.icon'`
+  extension=`_value '.extension'`
+  openWith=`_value '.openWith'`
+  icon=`_value '.icon'`
 
-    iconPath="`cygpath -w "$ICON_DIR/$icon"`"
+  iconPath="`cygpath -w "$ICON_DIR/$icon"`"
 
-    sed -e "s|EXTENSION|${extension}|g" \
-        -e "s|ICON|${iconPath//\\/\\/}|g" \
-        -e "s|APPLICATION|${openWith//\\/\\\\\\\\}|g" \
-        template/ext.reg >> out/ext.reg
+  sed -e "s|EXTENSION|${extension}|g" \
+    -e "s|ICON|${iconPath//\\/\\/}|g" \
+    -e "s|APPLICATION|${openWith//\\/\\\\\\\\}|g" \
+    template/ext.reg >> out/ext.reg
 
-    # set the new extension as the default program
-    ./SetUserFTA ".${extension}" "auto.${extension}"
+  # set the new extension as the default program
+  ./SetUserFTA ".${extension}" "auto.${extension}"
 
-    echo "[SET]    $icon"
+  echo "[SET]    $icon"
 done
 
 
