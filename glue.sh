@@ -24,6 +24,17 @@ CONFIG_FILE='config.json'
 ICON_DIR='/mnt/d/ext/customization/icons/metro'
 
 
+# decide which file converter to use
+if   [ `command -v cygpath` ]; then
+  PATH_CONVERTER='cygpath'
+elif [ `command -v wslpath` ]; then
+  PATH_CONVERTER='wslpath'
+else
+  echo 'error: unable to find cygpath or wslpath locally'
+  exit 1
+fi
+
+
 while getopts ':c:i:-:' opt; do
   case "$opt" in
     -) case "$OPTARG" in
@@ -80,7 +91,7 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
   openWith=`_value '.openWith'`
   icon=`_value '.icon'`
 
-  iconPath="`cygpath -w "$ICON_DIR/$icon"`"
+  iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
 
   sed -e "s|EXTENSION|${extension}|g" \
     -e "s|ICON|${iconPath//\\/\\/}|g" \
@@ -140,8 +151,8 @@ for shortcutPath in "${SHORTCUTS[@]}"; do
 
             local icon=${ICONS[$key]}
 
-            local shortcutPath=`cygpath -w "$shortcutPath"`
-            local iconPath=`cygpath -w "${ICON_DIR}/${icon}"`
+            local shortcutPath=`$PATH_CONVERTER -w "$shortcutPath"`
+            local iconPath=`$PATH_CONVERTER -w "${ICON_DIR}/${icon}"`
 
             printf '[SET] %s\n' "$shortcutPath"
 
