@@ -5,7 +5,7 @@
 		{ "pattern": "Google Chrome", "icon": "Google Chrome.ico" },
 		{ "pattern": "vivaldi", "icon": "Vivaldi.ico" },
 		{ "pattern": "foobar2000", "icon": "Foobar.ico" },
-		{ "pattern": "AdobAcrobat DC", "icon": "Adobe Acrobat Reader.ico" },
+		{ "pattern": "Adobe Acrobat DC", "icon": "Adobe Acrobat Reader.ico" },
 		{ "pattern": "Adobe Acrobat Distiller DC", "icon": "Adobe Acrobar Distiller.ico" },
 		{ "pattern": "Adobe After Effects", "icon": "Adobe After Effects.ico" },
 		{ "pattern": "Adobe Creative Cloud", "icon": "Adobe Creative Cloud.ico" },
@@ -26,6 +26,9 @@
 		{ "pattern": "Blade & Soul", "icon": "BnS.ico" },
 		{ "pattern": "PowerPoint", "icon": "PowerPoint 2013.ico" },
 		{ "pattern": "Word", "icon": "Word 2013.ico" },
+		{ "pattern": "Excel", "icon": "Excel 2013.ico" },
+		{ "pattern": "Outlook", "icon": "Outlook 2013.ico" },
+		{ "pattern": "OneNote", "icon": "OneNote 2013.ico" },
 		{ "pattern": "JetBrains.*/.*IDEA.*", "icon": "Idea.ico" },
 		{ "pattern": "JetBrains.*/.*CLion.*", "icon": "CLion.ico" },
 		{ "pattern": "JetBrains.*/.*Rider.*", "icon": "Rider.ico" },
@@ -34,14 +37,14 @@
 		{ "pattern": "Docker for Windows", "icon": "Docker.ico "}
 	],
 	"filetypes": [
-		{ "extension": "", "openWith": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe", "icon": "Vivaldi.ico" },
-		{ "extension": "html", "openWith": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe", "icon": "Vivaldi.ico" },
-		{ "extension": "pdf", "openWith": "C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe", "icon": "Adobe Acrobat Reader.ico" },
-		{ "extension": "md", "openWith": "C:\\Windows\\System32\\notepad.exe", "icon": "markdown.ico" },
-		{ "extension": "ppt", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" },
-		{ "extension": "pptx", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" },
+		{ "extension": "", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "File.ico" },
+		{ "extension": "apk", "openWith": "", "icon": "Android.ico" },
 		{ "extension": "doc", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.exe", "icon": "Word 2013.ico" },
 		{ "extension": "docx", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.exe", "icon": "Word 2013.ico" },
-		{ "extension": "apk", "openWith": "", "icon": "Android.ico" }
+		{ "extension": "html", "openWith": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe", "icon": "Vivaldi.ico" },
+		{ "extension": "md", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "markdown.ico" },
+		{ "extension": "pdf", "openWith": "C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe", "icon": "Adobe Acrobat Reader.ico" },
+		{ "extension": "ppt", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" },
+		{ "extension": "pptx", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" }
 	]
 }
