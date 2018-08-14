@@ -80,6 +80,19 @@ mkdir -p out
 echo "### FILE TYPES ###"
 echo
 
+
+# handle app aliasing
+declare -A apps
+
+for row in `jq -r '.apps[] | @base64' "$CONFIG_FILE"`; do
+  _value() { echo ${row} | base64 --decode | jq -r ${1} }
+
+  local name="`_value '.name'`"
+  local _path="`_value '.path'`"
+
+  apps["$name",path]="$_path"
+done
+
 # generate registry script head
 echo 'Windows Registry Editor Version 5.00' > out/ext.reg
 
@@ -87,24 +100,33 @@ echo 'Windows Registry Editor Version 5.00' > out/ext.reg
 for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
   _value() { echo ${row} | base64 --decode | jq -r ${1} }
 
-  extension=`_value '.extension'`
-  openWith=`_value '.openWith'`
+  extensions=(`_value '.extension | select (type=="string")'`)
+  extensions+=(`_value '.extensions[]? | select (type=="string")'`)
+  openWith=`_value '.openWith | select (type=="string")'`
+  openWithApp=`_value '.openWithApp | select (type=="string")'`
   icon=`_value '.icon'`
+
+  # resolve app alias
+  if [ -n "$openWithApp" ]; then
+    openWith=$apps["$openWithApp",path]
+  fi
 
   iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
 
-  sed -e "s|EXTENSION|${extension}|g" \
-    -e "s|ICON|${iconPath//\\/\\/}|g" \
-    -e "s|APPLICATION|${openWith//\\/\\\\\\\\}|g" \
-    template/ext.reg >> out/ext.reg
+  for extension in "${extensions[@]}"; do
+    sed -e "s|EXTENSION|${extension}|g" \
+      -e "s|ICON|${iconPath//\\/\\/}|g" \
+      -e "s|APPLICATION|${openWith//\\/\\\\\\\\}|g" \
+      template/ext.reg >> out/ext.reg
 
-  echo >> out/ext.reg
+    echo >> out/ext.reg
 
-  # set the new extension as the default program
-  [ $DRY_RUN = false ] && \
-  ./SetUserFTA ".${extension}" "auto.${extension}"
+    # set the new extension as the default program
+    [ $DRY_RUN = false ] && \
+      ./SetUserFTA ".${extension}" "auto.${extension}"
 
-  echo "[SET]    $icon"
+    echo "[SET] .$extension -> $icon"
+  done
 done
 
 

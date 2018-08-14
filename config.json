@@ -38,13 +38,30 @@
 	],
 	"filetypes": [
 		{ "extension": "", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "File.ico" },
+		{
+			"extensions": ["js","jsx", "map", "ini", "log", "css", "scss", "less", "yml", "yml"],
+			"openWithApp": "vim", "icon": "Vim.ico"
+		},
 		{ "extension": "apk", "openWith": "", "icon": "Android.ico" },
 		{ "extension": "doc", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.exe", "icon": "Word 2013.ico" },
 		{ "extension": "docx", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.exe", "icon": "Word 2013.ico" },
 		{ "extension": "html", "openWith": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe", "icon": "Vivaldi.ico" },
+		{ "extension": "ico", "openWithApp": "imageGlass", "icon": "Brackets - yellow.ico" },
 		{ "extension": "md", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "markdown.ico" },
+		{ "extension": "json", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
+		{ "extension": "gitignore", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
+		{ "extension": "gitkeep", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
+		{ "extension": "cmd", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
+		{ "extension": "config", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
+		{ "extension": "xml", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
+		{ "extension": "lua", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
+		{ "extension": "dat", "openWith": "C:\\etc\\wsl-terminal\\vim.exe", "icon": "Brackets - green.ico" },
 		{ "extension": "pdf", "openWith": "C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe", "icon": "Adobe Acrobat Reader.ico" },
 		{ "extension": "ppt", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" },
 		{ "extension": "pptx", "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" }
+	],
+	"apps": [
+		{ "name": "vim", "path": "C:\\etc\\wsl-terminal\\vim.exe"},
+		{ "name": "imageGlass", "path": "C:\\Program Files\\ImageGlass\\ImageGlass.exe"}
 	]
 }
