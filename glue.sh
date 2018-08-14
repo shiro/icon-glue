@@ -7,6 +7,7 @@ usage(){
   Usage: $SCRIPT_NAME [OPTION]...
     -c=<config.json>       specify config file
     -i=<path to icon dir>  specify custom icon dir path
+        --dry-run          do not actually persist any changes
         --help             print this message
 USAGE
 }
@@ -18,6 +19,7 @@ SHORTCUT_LOATIONS=(
 )
 
 
+DRY_RUN=false
 CONFIG_FILE='config.json'
 ICON_DIR='/mnt/d/ext/customization/icons/metro'
 
@@ -27,6 +29,9 @@ while getopts ':c:i:-:' opt; do
     -) case "$OPTARG" in
         help)
           usage; exit 0
+          ;;
+        dry-run)
+          DRY_RUN=true
           ;;
         *)
           usage; exit 1
@@ -85,6 +90,7 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
   echo >> out/ext.reg
 
   # set the new extension as the default program
+  [ $DRY_RUN = false ] && \
   ./SetUserFTA ".${extension}" "auto.${extension}"
 
   echo "[SET]    $icon"
@@ -92,6 +98,7 @@ done
 
 
 # apply registry snippet silently
+[ $DRY_RUN = false ] && \
 regedit.exe /s out/ext.reg
 
 
@@ -139,6 +146,7 @@ for shortcutPath in "${SHORTCUTS[@]}"; do
             printf '[SET] %s\n' "$shortcutPath"
 
             # update the registry value
+            [ $DRY_RUN = false ] && \
             cmd.exe /c set_icon.vbs "$shortcutPath" "$iconPath"
         fi
     done
