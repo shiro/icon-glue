@@ -1,16 +1,28 @@
 # Icon Glue
 
-Keep custom icons on windows, even after software updates (I'm looking at you Ad*be).
+Keep custom icons on Windows, even after software updates (I'm looking at you Ad*be).
 
-# Usage
+## Usage
 
-Simply run whenever your icons have been reverted.
+This script is best configured to run automatically on logon.
 
-All icons will be set according to the manifest.
+It can override icons of shortcuts located in the start menu
+and associate icons with specific file types and set the default
+application responsible to open the filetype.
 
-# Install
+Simply run again whenever your icons have been reverted.
 
-- Put folder anywhere
-- Edit icon folder path in `glue.sh`
-- Copy `icon_manifest.csv.example` to `icon_manifest.csv`
-- Edit `icon_manifest.csv` to match your icons
+### Shortcut icons
+
+To override shortcut icons in the `start menu` (or any other folder)
+recursively simply edit the `shortcuts` property of `config.json` to you liking.
+
+### Filetypes
+
+To associate a filetype (by extension) with an icon and default applicatoin
+simply edit the `filetypes` property of `config.json` to you liking.
+
+## Install
+
+- Clone this repo
+- Edit `config.json` to match your icons
