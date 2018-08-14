@@ -51,6 +51,10 @@ while getopts ':c:i:-:' opt; do
       ;;
   esac
 done
+shift $((OPTIND-1))
+
+# no additional arguments
+[ $# -ne 0 ] && usage && exit 1
 
 
 # create output dir
