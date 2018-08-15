@@ -173,14 +173,17 @@ for shortcutPath in "${SHORTCUTS[@]}"; do
 
             local icon=${ICONS[$key]}
 
-            local shortcutPath=`$PATH_CONVERTER -w "$shortcutPath"`
+            local platShortcutPath=`$PATH_CONVERTER -w "$shortcutPath"`
             local iconPath=`$PATH_CONVERTER -w "${ICON_DIR}/${icon}"`
 
-            printf '[SET] %s\n' "$shortcutPath"
+            printf '[SET] %s\n' "$platShortcutPath"
 
-            # update the registry value
-            [ $DRY_RUN = false ] && \
-            cmd.exe /c set_icon.vbs "$shortcutPath" "$iconPath"
+            if [ $DRY_RUN = false ]; then
+              # update the registry value
+              cp "$shortcutPath" "out/shortcut.lnk"
+              cmd.exe /c set_icon.vbs "out/shortcut.lnk" "$iconPath"
+              mv "out/shortcut.lnk" "$shortcutPath"
+            fi
         fi
     done
 
