@@ -5,8 +5,8 @@ SCRIPT_NAME="`basename $0`"
 usage(){
   cat <<USAGE
   Usage: $SCRIPT_NAME [OPTION]...
-    -c=<config.json>       specify config file
-    -i=<path to icon dir>  specify custom icon dir path
+    -c <config.json>       specify config file
+    -i <path to icon dir>  specify custom icon dir path
         --dry-run          do not actually persist any changes
         --help             print this message
 USAGE
