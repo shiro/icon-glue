@@ -65,7 +65,7 @@
 		{ "extensions": ["pdf"], "openWith": "C:\\Program Files (x86)\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe", "icon": "Adobe Acrobat Reader.ico" },
 		{ "extensions": ["xls","xlsx"], "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE", "icon": "Excel 2013.ico" },
 		{ "extensions": ["ppt","pptx"], "openWith": "C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" },
-		{ "extensions": ["jar"], "openWith": "C:\\ProgramData\\Oracle\\Java\\javapath_target_44020015\\java.exe", "icon": "Java.ico" }
+		{ "extensions": ["jar"], "openWith": "C:\\ProgramData\\Oracle\\Java\\javapath\\java.exe", "icon": "Java.ico" }
 	],
 	"apps": [
 		{ "name": "vim", "path": "C:\\etc\\wsl-terminal\\vim.exe" },
