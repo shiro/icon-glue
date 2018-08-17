@@ -9,4 +9,4 @@
 @="Open"
 
 [HKEY_CLASSES_ROOT\auto.EXTENSION\shell\open\command]
-@="APPLICATION \"%1\""
+@="COMMAND"

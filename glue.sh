@@ -85,12 +85,16 @@ echo
 declare -A apps
 
 for row in `jq -r '.apps[] | @base64' "$CONFIG_FILE"`; do
-  _value() { echo ${row} | base64 --decode | jq -r ${1} }
+  _value() { echo ${row} | base64 --decode | jq -r "$1"'| select (type=="string")'}
 
   local name="`_value '.name'`"
   local _path="`_value '.path'`"
+  local command="`_value '.command'`"
 
-  apps["$name",path]="$_path"
+  if [ -z "$command" ] && \
+    command="$_path \"%1\""
+
+  apps["$name",command]="$command"
 done
 
 # generate registry script head
@@ -98,25 +102,34 @@ echo 'Windows Registry Editor Version 5.00' > out/ext.reg
 
 
 for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
-  _value() { echo ${row} | base64 --decode | jq -r ${1} }
+  _value() { echo ${row} | base64 --decode | jq -r "$1"'| select (type=="string")' }
 
-  extensions=(`_value '.extension | select (type=="string")'`)
-  extensions+=(`_value '.extensions[]? | select (type=="string")'`)
-  openWith=`_value '.openWith | select (type=="string")'`
-  openWithApp=`_value '.openWithApp | select (type=="string")'`
-  icon=`_value '.icon'`
+  local extensions=(`_value '.extensions[]?'`)
+  local openWith=`_value '.openWith'`
+  local openWithApp=`_value '.openWithApp'`
+  local icon=`_value '.icon'`
+  local command=`_value '.command'`
+  local _path="`_value '.path'`"
 
-  # resolve app alias
-  if [ -n "$openWithApp" ]; then
-    openWith=$apps["$openWithApp",path]
+  # resolve app command
+  if   [ -n "$command" ]; then
+    command="$command"
+  elif [ -n "${apps["$openWithApp",command]}" ]; then
+    command=$apps["$openWithApp",command]
+  else
+    command="$openWith \"%1\""
   fi
 
   iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
 
   for extension in "${extensions[@]}"; do
+    # special handling of empty extension
+    if [ "$extension" = "NONE" ] && \
+      extension=""
+
     sed -e "s|EXTENSION|${extension}|g" \
       -e "s|ICON|${iconPath//\\/\\/}|g" \
-      -e "s|APPLICATION|${openWith//\\/\\\\\\\\}|g" \
+      -e "s|COMMAND|${command//\\/\\\\}|g" \
       template/ext.reg >> out/ext.reg
 
     echo >> out/ext.reg
