@@ -92,7 +92,7 @@ for row in `jq -r '.apps[] | @base64' "$CONFIG_FILE"`; do
   local command="`_value '.command'`"
 
   if [ -z "$command" ] && \
-    command="$_path \"%1\""
+    command="$_path "'\\"%1\\"'
 
   apps["$name",command]="$command"
 done
@@ -117,7 +117,7 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
   elif [ -n "${apps["$openWithApp",command]}" ]; then
     command=$apps["$openWithApp",command]
   else
-    command="$openWith \"%1\""
+    command="$openWith "'\\"%1\\"'
   fi
 
   iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
@@ -175,6 +175,8 @@ for row in `jq -r '.shortcuts[] | @base64' "$CONFIG_FILE"`; do
 done
 
 
+mkdir -p out/shortcuts 2>/dev/null
+
 # set the new icons for each shortcut if it's in the icon manifest
 for shortcutPath in "${SHORTCUTS[@]}"; do
     # get the name without the prefix
@@ -191,11 +193,12 @@ for shortcutPath in "${SHORTCUTS[@]}"; do
 
             printf '[SET] %s\n' "$platShortcutPath"
 
-            if [ $DRY_RUN = false ]; then
-              # update the registry value
-              cp "$shortcutPath" "out/shortcut.lnk"
-              cmd.exe /c set_icon.vbs "out/shortcut.lnk" "$iconPath"
-              mv "out/shortcut.lnk" "$shortcutPath"
+            cp "$shortcutPath" "out/shortcuts/${shortcutPath:t}"
+            cmd.exe /c set_icon.vbs "out/shortcuts/${shortcutPath:t}" "$iconPath"
+
+            # update the registry value
+            if [ "$DRY_RUN" = false ]; then
+              cp "out/shortcuts/${shortcut:t}"  "$shortcutPath"
             fi
         fi
     done
