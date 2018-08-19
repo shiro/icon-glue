@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 SCRIPT_NAME="`basename $0`"
+SCRIPT_PATH="`readlink -f ${0:a}`"
 
 usage(){
   cat <<USAGE
@@ -73,7 +74,7 @@ shift $((OPTIND-1))
 [ $# -ne 0 ] && usage && exit 1
 
 
-cd "${0:a:h}"
+cd "${SCRIPT_PATH:h}"
 mkdir -p out
 
 
