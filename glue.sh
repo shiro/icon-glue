@@ -73,7 +73,7 @@ shift $((OPTIND-1))
 [ $# -ne 0 ] && usage && exit 1
 
 
-# create output dir
+cd "${0:a:h}"
 mkdir -p out
 
 
@@ -136,7 +136,7 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
 
     # set the new extension as the default program
     [ $DRY_RUN = false ] && \
-      ./SetUserFTA ".${extension}" "auto.${extension}"
+      ./SetUserFTA.exe ".${extension}" "auto.${extension}"
 
     echo "[SET] .$extension -> $icon"
   done
