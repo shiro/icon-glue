@@ -35,6 +35,7 @@
 		{ "pattern": "PowerPoint", "icon": "PowerPoint 2013.ico" },
 		{ "pattern": "Word", "icon": "Word 2013.ico" },
 		{ "pattern": "Excel", "icon": "Excel 2013.ico" },
+		{ "pattern": "vim", "icon": "Vim.ico" },
 		{ "pattern": "Outlook", "icon": "Outlook 2013.ico" },
 		{ "pattern": "OneNote", "icon": "OneNote 2013.ico" },
 		{ "pattern": "JetBrains.*/.*IDEA.*", "icon": "Idea.ico" },
@@ -42,7 +43,8 @@
 		{ "pattern": "JetBrains.*/.*Rider.*", "icon": "Rider.ico" },
 		{ "pattern": "JetBrains.*/.*DataGrip.*", "icon": "DataGrip.ico" },
 		{ "pattern": "JetBrains.*/.*PhpStorm.*", "icon": "PhpStorm.ico" },
-		{ "pattern": "Docker for Windows", "icon": "Docker.ico "}
+		{ "pattern": "Docker for Windows", "icon": "Docker.ico "},
+		{ "pattern": "Zeplin", "icon": "Zeplin.ico"}
 	],
 	"filetypes": [
 		{ "extensions": ["NONE"], "openWithApp": "vim", "icon": "File.ico" },
