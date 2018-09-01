@@ -16,6 +16,7 @@ USAGE
 
 SHORTCUT_LOATIONS=(
     /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu
+    ${HOME}'/AppData/Roaming/ClassicShell/Pinned'
     ${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu'
 )
 
@@ -93,7 +94,7 @@ for row in `jq -r '.apps[] | @base64' "$CONFIG_FILE"`; do
   local command="`_value '.command'`"
 
   if [ -z "$command" ] && \
-    command="$_path "'\"%1\"'
+    command="${_path//\\/\\\\} "'\"%1\"'
 
   apps["$name",command]="$command"
 done
@@ -118,7 +119,7 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
   elif [ -n "${apps["$openWithApp",command]}" ]; then
     command=$apps["$openWithApp",command]
   else
-    command="$openWith "'\"%1\"'
+    command="${openWith//\\/\\\\} "'\"%1\"'
   fi
 
   iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
@@ -130,7 +131,7 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
 
     sed -e "s|EXTENSION|${extension}|g" \
       -e "s|ICON|${iconPath//\\/\\/}|g" \
-      -e "s|COMMAND|${command//\\/\\\\\\\\}|g" \
+      -e "s|COMMAND|${command//\\/\\\\}|g" \
       template/ext.reg >> out/ext.reg
 
     echo >> out/ext.reg

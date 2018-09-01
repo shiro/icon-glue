@@ -10,3 +10,6 @@
 
 [HKEY_CLASSES_ROOT\auto.EXTENSION\shell\open\command]
 @="COMMAND"
+
+[HKEY_CLASSES_ROOT\auto.EXTENSION\shell\RunAs\command]
+@="COMMAND"
