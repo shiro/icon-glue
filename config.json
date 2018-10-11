@@ -46,12 +46,13 @@
 		{ "pattern": "Zeplin", "icon": "Zeplin.ico"},
 		{ "pattern": "f.lux", "icon": "F.lux.ico" },
 		{ "pattern": "foobar2000", "icon": "Foobar.ico" },
-		{ "pattern": "vim", "icon": "Vim.ico" },
+		{ "pattern": "vim", "icon": "vim.ico" },
 		{ "pattern": "vivaldi", "icon": "Vivaldi.ico" }
 	],
 	"filetypes": [
 		{ "extensions": ["NONE"], "openWithApp": "vim", "icon": "File.ico" },
 		{ "extensions": ["css","scss","less"], "openWithApp": "vim", "icon": "Guide.ico" },
+		{ "extensions": ["txt","ini","conf"], "openWithApp": "vim", "icon": "vim.ico" },
 		{ "extensions": ["json","lua","properties","babelrc","lock","list"], "openWithApp": "vim", "icon": "Brackets - green.ico" },
 		{ "extensions": ["sh","zsh","bash"], "openWithApp": "zsh", "icon": "Command Prompt.ico" },
 		{ "extensions": ["reg"], "command": "C:\\\\Windows\\\\regedit.exe %1", "icon": "RegEdit.ico" },
