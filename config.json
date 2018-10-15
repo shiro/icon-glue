@@ -48,7 +48,7 @@
 		{ "pattern": "Windows Media Player", "icon": "Windows Media Player alt.ico" },
 		{ "pattern": "Word", "icon": "Word 2013.ico" },
 		{ "pattern": "Zeplin", "icon": "Zeplin.ico"},
-		{ "pattern": "f.lux", "icon": "F.lux.ico" },
+		{ "pattern": "f.lux", "icon": "f.lux.ico" },
 		{ "pattern": "foobar2000", "icon": "Foobar.ico" },
 		{ "pattern": "vim", "icon": "vim.ico" },
 		{ "pattern": "vivaldi", "icon": "Vivaldi.ico" }
