@@ -36,11 +36,12 @@
 		{ "pattern": "Outlook", "icon": "Outlook 2013.ico" },
 		{ "pattern": "Overwatch", "icon": "Overwatch.ico" },
 		{ "pattern": "PowerPoint", "icon": "PowerPoint 2013.ico" },
-		{ "pattern": "Rainmeter", "icon": "Rainmeter.ico" },
-		{ "pattern": "ShareX", "icon": "ShareX.ico" },
-		{ "pattern": "Skype", "icon": "Skype.ico" },
+		{ "pattern": "Rainmeter", "icon": "rainmeter.ico" },
+		{ "pattern": "ShareX", "icon": "shareX.ico" },
+		{ "pattern": "Skype", "icon": "skype.ico" },
 		{ "pattern": "SumatraPDF", "icon": "Book - orange.ico" },
-		{ "pattern": "Syncplay", "icon": "Syncplay.ico" },
+		{ "pattern": "Syncplay", "icon": "syncplay.ico" },
+		{ "pattern": "TreeSize", "icon": "treesize.ico" },
 		{ "pattern": "Task Scheduler", "icon": "task.ico" },
 		{ "pattern": "Thunderbird", "icon": "Thunderbird.ico" },
 		{ "pattern": "Tixati", "icon": "tixati.ico" },
@@ -61,6 +62,8 @@
 		{ "extensions": ["sh","zsh","bash"], "openWithApp": "zsh", "icon": "Command Prompt.ico" },
 		{ "extensions": ["reg"], "command": "C:\\\\Windows\\\\regedit.exe %1", "icon": "RegEdit.ico" },
 		{ "extensions": ["cmd","bat"], "openWithApp": "cmd", "icon": "Command Prompt.ico" },
+		{ "extensions": ["mp3","mid"], "openWithApp": "foobar2000", "icon": "music.ico" },
+		{ "extensions": ["flv","mp4","webm"], "openWithApp": "mpv", "icon": "video.ico" },
 		{ "extensions": ["ini","yml","log","csv","manifest","map","dat"], "openWithApp": "vim", "icon": "Notifications.ico" },
 		{ "extensions": ["config","conf"], "openWithApp": "vim", "icon": "Stack Overflow.ico" },
 		{ "extensions": ["ts","tsx"], "openWithApp": "vim", "icon": "Typescript.ico" },
@@ -84,8 +87,10 @@
 	"apps": [
 		{ "name": "vim", "path": "C:\\etc\\term\\vim.exe" },
 		{ "name": "imageGlass", "path": "C:\\Program Files\\ImageGlass\\ImageGlass.exe" },
+		{ "name": "foobar2000", "path": "C:\\Program Files (x86)\\foobar2000\\foobar2000.exe" },
 		{ "name": "cmd", "path": "C:\\Windows\\System32\\cmd.exe", "command":"\\\"%1\\\" %*" },
 		{ "name": "zsh", "path": "C:\\etc\\wsl-terminal\\zsh.exe" },
+		{ "name": "mpv", "path": "C:\\etc\\mpv\\mpv.exe" },
 		{ "name": "vivaldi", "path": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe" }
 	]
 }
