@@ -63,7 +63,7 @@
 		{ "extensions": ["sh","zsh","bash"], "openWithApp": "zsh", "icon": "Command Prompt.ico" },
 		{ "extensions": ["reg"], "command": "C:\\\\Windows\\\\regedit.exe %1", "icon": "RegEdit.ico" },
 		{ "extensions": ["cmd","bat"], "openWithApp": "cmd", "icon": "Command Prompt.ico" },
-		{ "extensions": ["mp3","mid"], "openWithApp": "foobar2000", "icon": "music.ico" },
+		{ "extensions": ["mp3","m4a","wav","mid"], "openWithApp": "foobar2000", "icon": "music.ico" },
 		{ "extensions": ["flv","mp4","webm"], "openWithApp": "mpc-hc", "icon": "video.ico" },
 		{ "extensions": ["ini","yml","log","csv","manifest","map","dat"], "openWithApp": "vim", "icon": "Notifications.ico" },
 		{ "extensions": ["config","conf"], "openWithApp": "vim", "icon": "Stack Overflow.ico" },
@@ -90,7 +90,7 @@
 		{ "name": "imageGlass", "path": "C:\\Program Files\\ImageGlass\\ImageGlass.exe" },
 		{ "name": "foobar2000", "path": "C:\\Program Files (x86)\\foobar2000\\foobar2000.exe" },
 		{ "name": "cmd", "path": "C:\\Windows\\System32\\cmd.exe", "command":"\\\"%1\\\" %*" },
-		{ "name": "zsh", "path": "C:\\etc\\wsl-terminal\\zsh.exe" },
+		{ "name": "zsh", "path": "C:\\etc\\term\\zsh.exe" },
 		{ "name": "mpc-hc", "path": "C:\\Program Files (x86)\\K-Lite Codec Pack\\MPC-HC64\\mpc-hc64.exe"},
 		{ "name": "vivaldi", "path": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe" }
 	]
