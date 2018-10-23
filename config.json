@@ -62,6 +62,7 @@
 		{ "extensions": ["json","lua","properties","babelrc","lock","list"], "openWithApp": "vim", "icon": "Brackets - green.ico" },
 		{ "extensions": ["sh","zsh","bash"], "openWithApp": "zsh", "icon": "Command Prompt.ico" },
 		{ "extensions": ["reg"], "command": "C:\\\\Windows\\\\regedit.exe %1", "icon": "RegEdit.ico" },
+		{ "extensions": ["img", "iso"], "icon": "CD.ico" },
 		{ "extensions": ["cmd","bat"], "openWithApp": "cmd", "icon": "Command Prompt.ico" },
 		{ "extensions": ["mp3","m4a","wav","mid"], "openWithApp": "foobar2000", "icon": "music.ico" },
 		{ "extensions": ["flv","mp4","webm"], "openWithApp": "mpc-hc", "icon": "video.ico" },
