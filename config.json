@@ -65,6 +65,7 @@
 		{ "extensions": ["img", "iso"], "icon": "CD.ico" },
 		{ "extensions": ["cmd","bat"], "openWithApp": "cmd", "icon": "Command Prompt.ico" },
 		{ "extensions": ["mp3","m4a","wav","mid"], "openWithApp": "foobar2000", "icon": "music.ico" },
+		{ "extensions": ["ps1"], "openWithApp": "powershell", "icon": "Command Prompt.ico" },
 		{ "extensions": ["flv","mp4","webm"], "openWithApp": "mpc-hc", "icon": "video.ico" },
 		{ "extensions": ["ini","yml","log","csv","manifest","map","dat"], "openWithApp": "vim", "icon": "Notifications.ico" },
 		{ "extensions": ["config","conf"], "openWithApp": "vim", "icon": "Stack Overflow.ico" },
@@ -93,6 +94,7 @@
 		{ "name": "cmd", "path": "C:\\Windows\\System32\\cmd.exe", "command":"\\\"%1\\\" %*" },
 		{ "name": "zsh", "path": "C:\\etc\\term\\zsh.exe" },
 		{ "name": "mpc-hc", "path": "C:\\Program Files (x86)\\K-Lite Codec Pack\\MPC-HC64\\mpc-hc64.exe"},
-		{ "name": "vivaldi", "path": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe" }
+		{ "name": "vivaldi", "path": "C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe" },
+		{ "name": "powershell", "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" }
 	]
 }
