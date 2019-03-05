@@ -77,6 +77,7 @@
 		{ "extensions": ["git","gitignore","gitkeep","gitattributes","gitmodules"], "openWithApp": "vim", "icon": "Github.ico" },
 		{ "extensions": ["apk"], "icon": "Android.ico" },
 		{ "extensions": ["mod"], "icon": "boxArrowDown - purple.ico" },
+		{ "extensions": ["lst"], "openWithApp": "vim", "icon": "text.ico" },
 		{ "extensions": ["htm","html"], "openWithApp": "vivaldi", "icon": "Vivaldi.ico" },
 		{ "extensions": ["jpg","jpeg","png","svg","raw","ico","svg","bmp"], "openWithApp": "imageGlass", "icon": "Pictures.ico" },
 		{ "extensions": ["md"], "openWithApp": "vim", "icon": "markdown.ico" },
