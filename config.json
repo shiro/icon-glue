@@ -58,7 +58,7 @@
 	"filetypes": [
 		{ "extensions": ["NONE"], "openWithApp": "vim", "icon": "File.ico" },
 		{ "extensions": ["css","scss","less"], "openWithApp": "vim", "icon": "Guide.ico" },
-		{ "extensions": ["txt","ini","conf"], "openWithApp": "vim", "icon": "vim.ico" },
+		{ "extensions": ["txt","ini","conf","vim"], "openWithApp": "vim", "icon": "vim.ico" },
 		{ "extensions": ["json","lua","properties","babelrc","lock","list"], "openWithApp": "vim", "icon": "Brackets - green.ico" },
 		{ "extensions": ["sh","zsh","bash"], "openWithApp": "zsh", "icon": "Command Prompt.ico" },
 		{ "extensions": ["reg"], "openWith": "C:\\Windows\\regedit.exe", "icon": "RegEdit.ico" },
@@ -84,7 +84,7 @@
 		{ "extensions": ["dll"], "icon": "Configure alt.ico" },
 		{ "extensions": ["xml","xsd","xsl"], "openWithApp": "vim", "icon": "code - green.ico" },
 		{ "extensions": ["xpi"], "icon": "thunderbird.ico" },
-		{ "extensions": ["pdf"], "openWith": "C:\\Program Files\\Nitro\\NitroPDF.exe", "icon": "book - orange.ico" },
+		{ "extensions": ["pdf"], "openWith": "C:\\Program Files\\Nitro\\Pro\\12\\NitroPDF.exe", "icon": "book - orange.ico" },
 		{ "extensions": ["xls","xlsx"], "openWith": "C:\\Program Files\\Microsoft Office\\Office16\\EXCEL.EXE", "icon": "Excel 2013.ico" },
 		{ "extensions": ["ppt","pptx"], "openWith": "C:\\Program Files\\Microsoft Office\\Office16\\POWERPNT.exe", "icon": "PowerPoint 2013.ico" },
 		{ "extensions": ["doc","docx"], "openWith": "C:\\Program Files\\Microsoft Office\\Office16\\WINWORD.exe", "icon": "Word 2013.ico" },
