@@ -104,45 +104,51 @@ echo 'Windows Registry Editor Version 5.00' > out/ext.reg
 
 
 for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
-  _value() { echo ${row} | base64 --decode | jq -r "$1"'| select (type=="string")' }
+  task(){
+    _value() { echo ${row} | base64 --decode | jq -r "$1"'| select (type=="string")' }
 
-  local extensions=(`_value '.extensions[]?'`)
-  local openWith=`_value '.openWith'`
-  local openWithApp=`_value '.openWithApp'`
-  local icon=`_value '.icon'`
-  local command=`_value '.command'`
-  local _path="`_value '.path'`"
+    local extensions=(`_value '.extensions[]?'`)
+    local openWith=`_value '.openWith'`
+    local openWithApp=`_value '.openWithApp'`
+    local icon=`_value '.icon'`
+    local command=`_value '.command'`
+    local _path="`_value '.path'`"
 
-  # resolve app command
-  if   [ -n "$command" ]; then
-    command="$command"
-  elif [ -n "${apps["$openWithApp",command]}" ]; then
-    command=$apps["$openWithApp",command]
-  else
-    command="${openWith//\\/\\\\} "'\"%1\"'
-  fi
+    # resolve app command
+    if   [ -n "$command" ]; then
+      command="$command"
+    elif [ -n "${apps["$openWithApp",command]}" ]; then
+      command=$apps["$openWithApp",command]
+    else
+      command="${openWith//\\/\\\\} "'\"%1\"'
+    fi
 
-  iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
+    iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
 
-  for extension in "${extensions[@]}"; do
-    # special handling of empty extension
-    if [ "$extension" = "NONE" ] && \
-      extension=""
+    for extension in "${extensions[@]}"; do
+      # special handling of empty extension
+      if [ "$extension" = "NONE" ] && \
+        extension=""
 
-    sed -e "s|EXTENSION|${extension}|g" \
-      -e "s|ICON|${iconPath//\\/\\/}|g" \
-      -e "s|COMMAND|${command//\\/\\\\}|g" \
-      template/ext.reg >> out/ext.reg
+      sed -e "s|EXTENSION|${extension}|g" \
+        -e "s|ICON|${iconPath//\\/\\/}|g" \
+        -e "s|COMMAND|${command//\\/\\\\}|g" \
+        template/ext.reg >> out/ext.reg
 
-    echo >> out/ext.reg
+      echo >> out/ext.reg
 
-    # set the new extension as the default program
-    [ $DRY_RUN = false ] && \
-      ./SetUserFTA.exe ".${extension}" "auto.${extension}"
+      # set the new extension as the default program
+      [ $DRY_RUN = false ] && \
+        ./SetUserFTA.exe ".${extension}" "auto.${extension}"
 
-    echo "[SET] .$extension -> $icon"
-  done
+      echo "[SET] .$extension -> $icon"
+    done
+  }
+  task &
 done
+
+wait
+
 
 
 # apply registry snippet silently
@@ -181,6 +187,7 @@ mkdir -p out/shortcuts 2>/dev/null
 
 # set the new icons for each shortcut if it's in the icon manifest
 for shortcutPath in "${SHORTCUTS[@]}"; do
+    (
     # get the name without the prefix
     local shortcut="${shortcutPath##*Start Menu/Programs/}"
 
@@ -203,7 +210,9 @@ for shortcutPath in "${SHORTCUTS[@]}"; do
               cp "out/shortcuts/${shortcut:t}"  "$shortcutPath"
             fi
         fi
+
     done
 
     unset ICON
+    ) &
 done
