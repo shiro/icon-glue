@@ -165,7 +165,9 @@ echo
 declare -a SHORTCUTS
 
 for location in "$SHORTCUT_LOATIONS[@]"; do
-    local location=$(realpath "$location")
+    local location=$(realpath "$location" || '')
+
+    [ -z $location ] && continue
 
     SHORTCUTS+=("$location"/**/*.lnk) 2>/dev/null
 done
