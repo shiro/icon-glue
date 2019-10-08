@@ -91,7 +91,7 @@
 		{ "extensions": ["jar"], "openWith": "C:\\ProgramData\\Oracle\\Java\\javapath\\java.exe", "icon": "Java.ico" }
 	],
 	"apps": [
-		{ "name": "vim", "path": "C:\\etc\\term\\bin\\vim.exe" },
+		{ "name": "vim", "path": "D:\\Users\\shiro\\AppData\\Local\\wsltty\\vim.exe" },
 		{ "name": "imageGlass", "path": "C:\\Program Files\\ImageGlass\\ImageGlass.exe" },
 		{ "name": "foobar2000", "path": "C:\\Program Files (x86)\\foobar2000\\foobar2000.exe" },
 		{ "name": "cmd", "path": "C:\\Windows\\System32\\cmd.exe", "command":"\\\"%1\\\" %*" },

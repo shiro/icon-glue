@@ -16,8 +16,8 @@ USAGE
 
 SHORTCUT_LOATIONS=(
     /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu
-    ${HOME}'/AppData/Roaming/ClassicShell/Pinned'
-    ${HOME}'/AppData/Roaming/Microsoft/Windows/Start Menu'
+    '/mnt/d/Users/shiro/AppData/Roaming/ClassicShell/Pinned'
+    '/mnt/d/Users/shiro/AppData/Roaming/Microsoft/Windows/Start Menu'
 )
 
 
@@ -124,6 +124,12 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
     fi
 
     iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
+
+    echo $iconPath
+    if [ -z $iconPath ]; then
+      echo "error: '$ICON_DIR/$icon' not found"
+      exit 1;
+    fi
 
     for extension in "${extensions[@]}"; do
       # special handling of empty extension
