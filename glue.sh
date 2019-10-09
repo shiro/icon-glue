@@ -123,12 +123,11 @@ for row in `jq -r '.filetypes[] | @base64' "$CONFIG_FILE"`; do
       command="${openWith//\\/\\\\} "'\"%1\"'
     fi
 
-    iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon"`"
+    iconPath="`$PATH_CONVERTER -w "$ICON_DIR/$icon" 2>/dev/null`"
 
-    echo $iconPath
-    if [ -z $iconPath ]; then
-      echo "error: '$ICON_DIR/$icon' not found"
-      exit 1;
+    if [ $? -ne 0 ]; then
+      echo "[ERROR] $ICON_DIR/$icon: not found"
+      continue
     fi
 
     for extension in "${extensions[@]}"; do
@@ -175,9 +174,10 @@ for location in "$SHORTCUT_LOATIONS[@]"; do
 
     [ -z $location ] && continue
 
+   # echo loc $location
+
     SHORTCUTS+=("$location"/**/*.lnk) 2>/dev/null
 done
-
 
 declare -A ICONS
 
@@ -203,10 +203,15 @@ for shortcutPath in "${SHORTCUTS[@]}"; do
     for key in ${(k)ICONS[@]}; do
         if [[ "$shortcut" =~ "$key" ]]; then
 
-            local icon=${ICONS[$key]}
+            icon=${ICONS[$key]}
 
-            local platShortcutPath=`$PATH_CONVERTER -w "$shortcutPath"`
-            local iconPath=`$PATH_CONVERTER -w "${ICON_DIR}/${icon}"`
+            platShortcutPath=`$PATH_CONVERTER -w "$shortcutPath"`
+            iconPath="`$PATH_CONVERTER -w "${ICON_DIR}/${icon}" 2>/dev/null`"
+
+            if [ $? -ne 0 ]; then
+              echo "[ERROR] $ICON_DIR/$icon: not found"
+              continue
+            fi
 
             printf '[SET] %s\n' "$platShortcutPath"
 
